@@ -7,6 +7,7 @@ import StateEx from './components/StateEx';
 import { useState } from 'react';
 import JsxEx from './components/JsxEx';
 import { isFocusable } from '@testing-library/user-event/dist/utils';
+import Controller from './components/Controller';
 
 function App() {
   const[title,setTitle] = useState('WEB');
@@ -68,6 +69,8 @@ else{
           setMode('read');
           setSelected_id(id);
         }} />
+
+        <Controller />
       {/* <Article 
         title = "HTML" 
         desc = "HTML is HyperTest Markup Language" /> */}
