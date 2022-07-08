@@ -1,7 +1,7 @@
 const Header = () => {
     return(
-        <div>
-            <h2 className = "header">
+        <div className = "header">
+            <h2>
                 <a href ="/">Day 영단어</a>
             </h2>
             <div className="menu">
