@@ -7,7 +7,7 @@ const Controller = (props) => {
                     <a href = "/create" 
                             onClick={(e) => {
                                 e.preventDefault();
-                                props.onChangeMode('Create'); 
+                                props.onChangeMode('create'); 
                             }}>
                             Create
                     </a>
@@ -16,7 +16,7 @@ const Controller = (props) => {
                     <a href = "/create" 
                             onClick={(e) => {
                                 e.preventDefault();
-                                props.onChangeMode('Update'); 
+                                props.onChangeMode('update'); 
                             }}>
                             Update
                     </a>
@@ -25,7 +25,7 @@ const Controller = (props) => {
                     <a href = "/create" 
                             onClick={(e) => {
                                 e.preventDefault();
-                                props.onChangeMode('Delete'); 
+                                props.onChangeMode('delete'); 
                             }}>
                             Delete
                     </a>

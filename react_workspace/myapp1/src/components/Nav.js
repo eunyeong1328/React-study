@@ -26,10 +26,10 @@ const Nav = (props) => {
                     data-id={content.id}
                     onClick = { (e) => {
                         e.preventDefault();
-                        console.log(e);
+                        //console.log(e);
                         // console.log(`Nav (id)-> ${content.id}`);
-                        //props.onChangePage(content.id);
-                        props.onChangePage(e.target.dataset.id);
+                        //props.onChangePage(e.target.dataset.id);
+                        props.onChangePage(content.id);
                     }} 
                 >{content.title}
                 </a>

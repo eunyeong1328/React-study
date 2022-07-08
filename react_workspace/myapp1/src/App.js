@@ -8,6 +8,7 @@ import { useState } from 'react';
 import JsxEx from './components/JsxEx';
 import { isFocusable } from '@testing-library/user-event/dist/utils';
 import Controller from './components/Controller';
+import CreateContent from './components/CreateContent';
 
 function App() {
   const[title,setTitle] = useState('WEB');
@@ -31,7 +32,7 @@ let _title, _desc, _article= null;
 if(mode === 'welcome'){
   _title = welcome.title;
   _desc = welcome.desc;
-  _article = <Article title = {_title}desc = {_desc} />
+  _article = <Article title = {_title} desc = {_desc} />
 }
 else if(mode === 'read'){
   // _title = contents[0].title;
@@ -46,9 +47,25 @@ else if(mode === 'read'){
       break;
     }
     i++;
-
-    _article = <Article title = {_title} desc = {_desc} />
   }
+  _article = <Article title = {_title} desc = {_desc} />
+}
+else if(mode == 'create'){
+  console.log('create mode');
+  _article = <CreateContent
+                onSubmit = { (_title,_desc) =>{
+                  console.log(`CreateContent : ${_title} ${_desc}`);
+                  let max_content_id = contents.length + 1;
+                  setContents(
+                    //[기존내용, 새로채워지는 내용]
+                    [ ...contents, 
+                      {id: max_content_id,
+                       title: _title,
+                      desc:_desc}
+                    ]
+                  );
+                }}
+                />
 }
 else{
   console.log('else');
@@ -81,10 +98,12 @@ else{
       }
 
       } />
+
+      {_article}
       {/* <Article 
         title = "HTML" 
         desc = "HTML is HyperTest Markup Language" /> */}
-         {/* <Article 
+          {/* <Article 
             title = {_title}
             desc = {_desc} /> */}
     </div>
