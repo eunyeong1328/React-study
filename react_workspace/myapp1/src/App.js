@@ -9,6 +9,7 @@ import JsxEx from './components/JsxEx';
 import { isFocusable } from '@testing-library/user-event/dist/utils';
 import Controller from './components/Controller';
 import CreateContent from './components/CreateContent';
+import UpdateContent from './components/UpdateContent';
 
 function App() {
   const[title,setTitle] = useState('WEB');
@@ -29,6 +30,21 @@ const [selected_id , setSelected_id] = useState(0);
 
 let _title, _desc, _article= null;
 
+const getReadContent = () => {
+  console.log(`getReadContent ==> selected_i ${selected_id}`);
+  let i =0;
+  let selected_index = 0;
+
+  while(i < contents.length){
+    if(contents[i].id === selected_id){
+      selected_index = i;
+      break;
+    }
+    i++;
+  }
+  return contents[selected_index]; 
+}
+
 if(mode === 'welcome'){
   _title = welcome.title;
   _desc = welcome.desc;
@@ -39,11 +55,11 @@ else if(mode === 'read'){
   // _desc = contents[0].desc;
   let i = 0;
   while(i<contents.length){
-    console.log(`Content[i]: ${contents[i].id}, ${selected_id}`);
+    //console.log(`Content[i]: ${contents[i].id}, ${selected_id}`);
     if(contents[i].id == selected_id){
       _title = contents[i].title;
       _desc = contents[i].desc;
-       console.log(`Content[i]: ${contents[i].id}, ${selected_id}`);
+       //console.log(`Content[i]: ${contents[i].id}, ${selected_id}`);
       break;
     }
     i++;
@@ -66,6 +82,19 @@ else if(mode == 'create'){
                   );
                 }}
                 />
+}
+else if(mode == 'update'){
+  console.log('update mode --> ');
+  //수정해야 될 항목의 데이터 저장
+  let _content = getReadContent();
+  _article  = <UpdateContent
+                  data = {_content}
+                  onSubmit = { (_title, _desc) => {
+                    console.log(`UpdateContent title:${_title} ,desc:${_desc}`);
+                    contents[selected_id-1].title = _title;
+                    contents[selected_id-1].desc = _desc;
+                  }}
+                ></UpdateContent>
 }
 else{
   console.log('else');
@@ -95,6 +124,15 @@ else{
 
       <Controller onChangeMode={ (mode)=>{
         setMode(mode);
+        if(mode === 'delete'){
+          let _contents = Array.from(contents);
+          console.log(`delete selected_id : ${selected_id}`);
+          if(window.confirm('Really Delete!!')) {
+            _contents.splice(selected_id-1,1);
+            setContents(_contents);
+            setMode('welcome');
+          }
+        }
       }
 
       } />
