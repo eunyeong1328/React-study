@@ -54,7 +54,7 @@ else if(mode == 'create'){
   console.log('create mode');
   _article = <CreateContent
                 onSubmit = { (_title,_desc) =>{
-                  console.log(`CreateContent : ${_title} ${_desc}`);
+                  console.log(`CreateContent title:${_title} ,desc:${_desc}`);
                   let max_content_id = contents.length + 1;
                   setContents(
                     //[기존내용, 새로채워지는 내용]
@@ -93,7 +93,7 @@ else{
           console.log(`Nav: ${id}`);
         }} />
 
-      <Controller onChangePage={ (mode)=>{
+      <Controller onChangeMode={ (mode)=>{
         setMode(mode);
       }
 

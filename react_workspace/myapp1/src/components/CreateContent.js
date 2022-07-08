@@ -13,7 +13,9 @@ const CreateContent = (props) => {
                 e.target.desc.value="";   
             }}>
             <input type="text" name = "title" placeholder="title"></input>
+            <br />
             <input type="text" name = "desc" placeholder="description"></input>
+            <br />
             <input type="submit" value = "제출"></input>
             </form>
          </article>
