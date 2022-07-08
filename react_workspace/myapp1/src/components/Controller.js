@@ -1,4 +1,4 @@
-const Controller = () => {
+const Controller = (props) => {
     return (
         <div>
             <h2> Controller </h2>
@@ -7,7 +7,7 @@ const Controller = () => {
                     <a href = "/create" 
                             onClick={(e) => {
                                 e.preventDefault();
-                                PaymentResponse.onChangeMode('Create'); 
+                                props.onChangeMode('Create'); 
                             }}>
                             Create
                     </a>
@@ -16,7 +16,7 @@ const Controller = () => {
                     <a href = "/create" 
                             onClick={(e) => {
                                 e.preventDefault();
-                                PaymentResponse.onChangeMode('Update'); 
+                                props.onChangeMode('Update'); 
                             }}>
                             Update
                     </a>
@@ -25,7 +25,7 @@ const Controller = () => {
                     <a href = "/create" 
                             onClick={(e) => {
                                 e.preventDefault();
-                                PaymentResponse.onChangeMode('Delete'); 
+                                props.onChangeMode('Delete'); 
                             }}>
                             Delete
                     </a>

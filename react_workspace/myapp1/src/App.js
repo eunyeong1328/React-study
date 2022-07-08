@@ -31,9 +31,7 @@ let _title, _desc, _article= null;
 if(mode === 'welcome'){
   _title = welcome.title;
   _desc = welcome.desc;
-  _article = <Article 
-  title = {_title}
-  desc = {_desc} />
+  _article = <Article title = {_title}desc = {_desc} />
 }
 else if(mode === 'read'){
   // _title = contents[0].title;
@@ -48,6 +46,7 @@ else if(mode === 'read'){
       break;
     }
     i++;
+    _article = <Article title = {_title} desc = {_desc} />
   }
 }
 else{
