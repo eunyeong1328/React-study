@@ -46,6 +46,7 @@ else if(mode === 'read'){
       break;
     }
     i++;
+
     _article = <Article title = {_title} desc = {_desc} />
   }
 }
@@ -56,7 +57,7 @@ else{
 
   return (
     <div className="App">
-      <JsxEx />
+      {/* <JsxEx /> */}
       {/* <StateEx /> */}
       {/* <Header title ="WWW" sub = "Header is value!!"/> */}
       {/* <Header title = {title} sub = {sub}/> */}
