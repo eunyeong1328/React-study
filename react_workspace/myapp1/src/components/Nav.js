@@ -16,16 +16,20 @@ const Nav = () => {
 
 export default Nav;
 */}
-const Nav2 = (props) => {
+const Nav = (props) => {
     const list = props.data.map((content)=>{
         return (
             <li key ={content.id}>
                 <a 
                     href = {content.id}
+                    //이벤트 객체 안의 
+                    data-id={content.id}
                     onClick = { (e) => {
                         e.preventDefault();
-                        console.log(`Nav (id)-> ${e.target.data.id}`);
-                        props.onChangePage(e.target.data.id);
+                        console.log(e);
+                        // console.log(`Nav (id)-> ${content.id}`);
+                        //props.onChangePage(content.id);
+                        props.onChangePage(e.target.dataset.id);
                     }} 
                 >{content.title}
                 </a>
@@ -35,6 +39,7 @@ const Nav2 = (props) => {
     return (
         <div>
             <nav>
+                <h2>Nav</h2>
                 <ul> 
                     {list}
                 </ul>
@@ -43,4 +48,4 @@ const Nav2 = (props) => {
     )
 }
 
-export default Nav2;
+export default Nav;
