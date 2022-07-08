@@ -15,8 +15,8 @@ const UpdateContent = (props) =>
                         e.target.title.value,
                         e.target.desc.value
                     );
-                    // e.target.title.value="";
-                    // e.target.desc.value="";
+                    e.target.title.value="";
+                    e.target.desc.value="";
                   }}>
                     <input type ="text" name = "title" value={title} 
                     onChange = {(e)=>{setTitle(e.target.value);} }/> <br />
