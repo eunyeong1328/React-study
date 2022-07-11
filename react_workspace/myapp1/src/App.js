@@ -4,37 +4,51 @@ import Header from './components/Header';
 import Nav from './components/Nav';
 import Article from './components/Article';
 import StateEx from './components/StateEx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import JsxEx from './components/JsxEx';
 import { isFocusable } from '@testing-library/user-event/dist/utils';
 import Controller from './components/Controller';
 import CreateContent from './components/CreateContent';
 import UpdateContent from './components/UpdateContent';
 
-function App_useSate(){
+function App(){
   let countVar = 0;
-  const [count, setCount] = useState(0); 
+  const [count, setCount] = useState(0);
+  const [mode, setMode] = useState('true'); 
 
-  console.log(`(랜더링) count ${count}`); 
+  console.log(`(랜더링) count -> ${count}`); 
+  console.log(`(랜더링) mode -> ${mode}`); 
+
+  //화면 렌더링 시에 실행됨
+  useEffect(() => {
+    console.log('useEffect() 실행 됨');
+  }, [mode]); //한번만 실행
+
   return(
     <div>
       <p> Click {countVar} count</p>
       <button onClick={()=>{
         countVar = countVar + 1; //랜더링하지 않아서 화면이 변하지 않음
         console.log(`countVar --> ${countVar}`);
-      }}>click</button>
+      }}>
+        Click (let)</button>
 
-      <p> Click {count} time {useState}</p> //유지하고 싶을 때 사용
+      <p> Click {count} time {useState}</p> 
       <button onClick={()=>{
         setCount(count+1); //useState로 인해 랜더링되어 화면이 변함
-      }}>Click {useState}</button>
-    </div>
+      }}>
+        Click (useState(count))</button>
 
-    
+        <p> Click {mode} {useEffect}</p> 
+      <button onClick={()=>{
+        setMode(mode === 'true'?'false':'true'); //useState로 인해 랜더링되어 화면이 변함
+      }}>
+        Click (useState(mode))</button>
+    </div>
   )
 }
 
-function App() {
+function App_myapp1() {
   const[title,setTitle] = useState('WEB');
   const [sub,setSub] = useState('World Wide Web');
   const[contents, setContents] = useState([
@@ -116,7 +130,7 @@ else if(mode == 'update'){
                     console.log(`UpdateContent title:${_title} ,desc:${_desc}`);
                     contents[selected_id - 1].title = _title;
                     contents[selected_id  -1].desc = _desc;
-                    setMode('welcome');
+                    setMode('welcome'); //수정후 nav리스트 값 변화시키기 위해서(다시 리로딩) 사용
                   }}
                 ></UpdateContent>
 }
