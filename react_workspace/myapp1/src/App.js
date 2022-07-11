@@ -11,7 +11,7 @@ import Controller from './components/Controller';
 import CreateContent from './components/CreateContent';
 import UpdateContent from './components/UpdateContent';
 
-function App(){
+function App_useSate(){
   let countVar = 0;
   const [count, setCount] = useState(0); 
 
@@ -34,7 +34,7 @@ function App(){
   )
 }
 
-function App_myapp1() {
+function App() {
   const[title,setTitle] = useState('WEB');
   const [sub,setSub] = useState('World Wide Web');
   const[contents, setContents] = useState([
@@ -115,8 +115,8 @@ else if(mode == 'update'){
                   onSubmit = { (_title, _desc) => {
                     console.log(`UpdateContent title:${_title} ,desc:${_desc}`);
                     contents[selected_id - 1].title = _title;
-                    console.log(` ${contents[selected_id - 1].title} :: ${contents[selected_id - 1].desc}`)
                     contents[selected_id  -1].desc = _desc;
+                    setMode('welcome');
                   }}
                 ></UpdateContent>
 }
