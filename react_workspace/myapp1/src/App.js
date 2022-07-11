@@ -11,7 +11,30 @@ import Controller from './components/Controller';
 import CreateContent from './components/CreateContent';
 import UpdateContent from './components/UpdateContent';
 
-function App() {
+function App(){
+  let countVar = 0;
+  const [count, setCount] = useState(0); 
+
+  console.log(`(랜더링) count ${count}`); 
+  return(
+    <div>
+      <p> Click {countVar} count</p>
+      <button onClick={()=>{
+        countVar = countVar + 1; //랜더링하지 않아서 화면이 변하지 않음
+        console.log(`countVar --> ${countVar}`);
+      }}>click</button>
+
+      <p> Click {count} time {useState}</p> //유지하고 싶을 때 사용
+      <button onClick={()=>{
+        setCount(count+1); //useState로 인해 랜더링되어 화면이 변함
+      }}>Click {useState}</button>
+    </div>
+
+    
+  )
+}
+
+function App_myapp1() {
   const[title,setTitle] = useState('WEB');
   const [sub,setSub] = useState('World Wide Web');
   const[contents, setContents] = useState([
