@@ -12,7 +12,7 @@ import CreateContent from './components/CreateContent';
 import UpdateContent from './components/UpdateContent';
 import { click } from '@testing-library/user-event/dist/click';
 
-function App(){
+function App_Hooks(){
   let countVar = 0; //만약 렌더링이 발생하면 이 값은 0으로 초기화됨 (맨 처음부터 다시 실행되는거니까 )
   const [count, setCount] = useState(0);
   const [mode, setMode] = useState('true'); 
@@ -36,6 +36,16 @@ function App(){
 
   return(
     <div>
+       <p> [let] Click {count} times (preventDefault)</p>
+      <a href = "http://localhost:3000/" onClick={(e)=>{
+        e.preventDefault(); //잠깐 고유동작을 막아라 이걸 막지 않으면 리셋됨
+        setCount(count+1);
+      }}> 
+        Click (preventDefault)</a>
+        <hr />
+        <br />
+
+
       <input ref = {inputRef} type = "text" placeholder='username'></input>
       <button onClick={check}>제출</button>
 
@@ -56,7 +66,7 @@ function App(){
 
       <p> Click {mode}  (useEffect) </p> 
       <button onClick = {() => {
-        setMode(mode === 'true'?'false':'true'); //useState로 인해 랜더링되어 화면이 변함
+        setMode(mode === 'true'?'false':'true'); // 화면 렌더링 시 
       }}>
         Click (useState(mode)) </button>
 
@@ -70,7 +80,7 @@ function App(){
   )
 }
 
-function App_myapp1() {
+function App() {
   const[title,setTitle] = useState('WEB');
   const [sub,setSub] = useState('World Wide Web');
   const[contents, setContents] = useState([
