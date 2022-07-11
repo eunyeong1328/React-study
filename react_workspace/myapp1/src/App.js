@@ -17,19 +17,28 @@ function App(){
   const [count, setCount] = useState(0);
   const [mode, setMode] = useState('true'); 
   const countRef = useRef(0);
+  const inputRef = useRef();
 
   console.log(`(랜더링) count -> ${count}`); 
   console.log(`(랜더링) mode -> ${mode}`); 
   console.log(`(랜더링) countRef -> ${countRef.current}`); 
+
+  const check = () => {
+    console.log(`check() -- > `);
+    console.log(inputRef);
+    alert(`welcome ${inputRef.current.value}`) //입력받은 값은 inputRef.current.value로 접근 가능
+  }
 
   //화면 렌더링 시에 실행됨
   useEffect(() => {
     console.log('useEffect() 실행 됨');
   }, [mode]); //한번만 실행
 
-
   return(
     <div>
+      <input ref = {inputRef} type = "text" placeholder='username'></input>
+      <button onClick={check}>제출</button>
+
       {/* let 사용 */}
       <p> [let] Click {countVar} count</p>
       <button onClick = {() => {
@@ -39,13 +48,13 @@ function App(){
         Click (let) </button>
 
       {/* useState 사용 */}
-      <p> Click {count} times {useState} (useSate)</p> 
+      <p> Click {count} times  (useSate)</p> 
       <button onClick = {() => {
         setCount(count+1); //useState로 인해 랜더링되어 화면이 변함
       }}>
         Click (useState(count))</button>
 
-      <p> Click {mode} {useEffect} (useEffect) </p> 
+      <p> Click {mode}  (useEffect) </p> 
       <button onClick = {() => {
         setMode(mode === 'true'?'false':'true'); //useState로 인해 랜더링되어 화면이 변함
       }}>
