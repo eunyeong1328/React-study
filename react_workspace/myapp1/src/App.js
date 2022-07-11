@@ -4,46 +4,59 @@ import Header from './components/Header';
 import Nav from './components/Nav';
 import Article from './components/Article';
 import StateEx from './components/StateEx';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import JsxEx from './components/JsxEx';
 import { isFocusable } from '@testing-library/user-event/dist/utils';
 import Controller from './components/Controller';
 import CreateContent from './components/CreateContent';
 import UpdateContent from './components/UpdateContent';
+import { click } from '@testing-library/user-event/dist/click';
 
 function App(){
-  let countVar = 0;
+  let countVar = 0; //만약 렌더링이 발생하면 이 값은 0으로 초기화됨 (맨 처음부터 다시 실행되는거니까 )
   const [count, setCount] = useState(0);
   const [mode, setMode] = useState('true'); 
+  const countRef = useRef(0);
 
   console.log(`(랜더링) count -> ${count}`); 
   console.log(`(랜더링) mode -> ${mode}`); 
+  console.log(`(랜더링) countRef -> ${countRef.current}`); 
 
   //화면 렌더링 시에 실행됨
   useEffect(() => {
     console.log('useEffect() 실행 됨');
   }, [mode]); //한번만 실행
 
+
   return(
     <div>
-      <p> Click {countVar} count</p>
-      <button onClick={()=>{
+      {/* let 사용 */}
+      <p> [let] Click {countVar} count</p>
+      <button onClick = {() => {
         countVar = countVar + 1; //랜더링하지 않아서 화면이 변하지 않음
-        console.log(`countVar --> ${countVar}`);
+        console.log(`countVar -> ${countVar}`);
       }}>
-        Click (let)</button>
+        Click (let) </button>
 
-      <p> Click {count} time {useState}</p> 
-      <button onClick={()=>{
+      {/* useState 사용 */}
+      <p> Click {count} times {useState} (useSate)</p> 
+      <button onClick = {() => {
         setCount(count+1); //useState로 인해 랜더링되어 화면이 변함
       }}>
         Click (useState(count))</button>
 
-        <p> Click {mode} {useEffect}</p> 
-      <button onClick={()=>{
+      <p> Click {mode} {useEffect} (useEffect) </p> 
+      <button onClick = {() => {
         setMode(mode === 'true'?'false':'true'); //useState로 인해 랜더링되어 화면이 변함
       }}>
-        Click (useState(mode))</button>
+        Click (useState(mode)) </button>
+
+      <p> Click {countRef.current} {useRef} </p> 
+      <button onClick = {() => {
+        countRef.current = countRef.current + 1;
+        console.log(`countRef -> ${countRef.current}`);
+      }}>
+      Click (useRef(countRef)) </button>
     </div>
   )
 }
