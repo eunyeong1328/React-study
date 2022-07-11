@@ -4,6 +4,7 @@ import Header from './components/Header';
 import DayList from './components/DayList'
 import WorldList from './components/WordlList';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import EmptyPage from './components/EmptyPage';
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
           </Route>
           <Route exact path ="/word/:day">
             <WorldList />
+          </Route>
+          <Route>
+            <EmptyPage />
           </Route>
       </Switch>
     </div>

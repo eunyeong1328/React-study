@@ -20,6 +20,13 @@
             "eng" : "computer",
             "kor" : "컴퓨터",
             "isDone" : false
+        },
+        {
+            "id" : 4,
+            "day" : 3,
+            "eng" : "school",
+            "kor" : "학교",
+            "isDone" : false
         }
     ]
 }
