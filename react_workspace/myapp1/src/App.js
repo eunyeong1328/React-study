@@ -12,12 +12,12 @@ import CreateContent from './components/CreateContent';
 import UpdateContent from './components/UpdateContent';
 import { click } from '@testing-library/user-event/dist/click';
 
-function App_Hooks(){
+function App(){
   let countVar = 0; //만약 렌더링이 발생하면 이 값은 0으로 초기화됨 (맨 처음부터 다시 실행되는거니까 )
   const [count, setCount] = useState(0);
   const [mode, setMode] = useState('true'); 
   const countRef = useRef(0);
-  const inputRef = useRef();
+  const inputRef = useRef(); //!!랜더링 안하고 싶을 때 사용!!일반 변수와 같이 값을 변경해도 랜더링 되지 않음. 하지만 랜더링 시 값이 초기화 되지 않음 
 
   console.log(`(랜더링) count -> ${count}`); 
   console.log(`(랜더링) mode -> ${mode}`); 
@@ -32,55 +32,52 @@ function App_Hooks(){
   //화면 렌더링 시에 실행됨
   useEffect(() => {
     console.log('useEffect() 실행 됨');
-  }, [mode]); //한번만 실행
-
+  }, [mode]); //mode변수 한번만 실행
+  // 매 번 실행: useEffect(() => {});
+  // 한 번만 실행: useEffect(() => {}, []);
+  // 특정 변수가 바뀔때만 실행: useEffect(() => {}, [변수]);
   return(
     <div>
        <p> [let] Click {count} times (preventDefault)</p>
       <a href = "http://localhost:3000/" onClick={(e)=>{
-        e.preventDefault(); //잠깐 고유동작을 막아라 이걸 막지 않으면 리셋됨
+        e.preventDefault(); //잠깐 고유동작을 막아라!! 이걸 막지 않으면 리셋됨
         setCount(count+1);
       }}> 
         Click (preventDefault)</a>
         <hr />
         <br />
 
-
       <input ref = {inputRef} type = "text" placeholder='username'></input>
       <button onClick={check}>제출</button>
 
-      {/* let 사용 */}
-      <p> [let] Click {countVar} count</p>
+     {/* let 사용 */}
+     <p>[let] Clicked {countVar} times</p>
       <button onClick = {() => {
-        countVar = countVar + 1; //랜더링하지 않아서 화면이 변하지 않음
-        console.log(`countVar -> ${countVar}`);
-      }}>
-        Click (let) </button>
+        countVar = countVar + 1;  //랜더링하지 않아서 화면이 변하지 않음
+        console.log(`countVar: ${countVar}`);
+      }}>Click (let) </button>
 
       {/* useState 사용 */}
-      <p> Click {count} times  (useSate)</p> 
+      <p>[useState] Clicked {count} times</p>
       <button onClick = {() => {
-        setCount(count+1); //useState로 인해 랜더링되어 화면이 변함
-      }}>
-        Click (useState(count))</button>
+        setCount(count + 1);  //useState로 인해 랜더링되어 화면이 변함
+      }}>Click (useState) </button>
 
-      <p> Click {mode}  (useEffect) </p> 
-      <button onClick = {() => {
-        setMode(mode === 'true'?'false':'true'); // 화면 렌더링 시 
-      }}>
-        Click (useState(mode)) </button>
+      <p>[useEffect] Clicked {mode}</p>
+      <button onClick = {() => {   //화면 렌더링 시에 실행됨
+        setMode(mode === 'true' ? 'false' : 'true');
+      }}>Click (useEffect) </button>
 
-      <p> Click {countRef.current} {useRef} </p> 
+      <p>[useRef] Clicked {countRef.current}</p>
       <button onClick = {() => {
-        countRef.current = countRef.current + 1;
-        console.log(`countRef -> ${countRef.current}`);
-      }}>
-      Click (useRef(countRef)) </button>
+        countRef.current += 1;
+        console.log(`countRef: ${countRef.current}`);
+      }}>Click (useRef) </button>
     </div>
   )
 }
 
-function App() {
+function App_myapp() {
   const[title,setTitle] = useState('WEB');
   const [sub,setSub] = useState('World Wide Web');
   const[contents, setContents] = useState([
