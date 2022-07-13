@@ -28,5 +28,5 @@ app.use((req,res) =>{
     let password = req.body.password || req.query.password; //get방식 || post 방식
     console.log('id: ' + id + ', password : ' + password);
 
-     res.send('id: ' + id + ', password : ' + password);
+    res.send('id: ' + id + ', password : ' + password);
 })
