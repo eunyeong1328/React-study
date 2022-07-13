@@ -15,6 +15,30 @@
     {
       "id": 4,
       "day": 4
+    },
+    {
+      "day": 5,
+      "id": 5
+    },
+    {
+      "day": 6,
+      "id": 6
+    },
+    {
+      "day": 7,
+      "id": 7
+    },
+    {
+      "day": 8,
+      "id": 8
+    },
+    {
+      "day": 9,
+      "id": 9
+    },
+    {
+      "day": 10,
+      "id": 10
     }
   ],
   "words": [
@@ -30,7 +54,7 @@
       "day": 2,
       "eng": "car",
       "kor": "차",
-      "isDone": true
+      "isDone": false
     },
     {
       "day": "2",
@@ -52,13 +76,6 @@
       "kor": "집",
       "isDone": false,
       "id": 5
-    },
-    {
-      "day": "2",
-      "eng": "apple",
-      "kor": "사과",
-      "isDone": false,
-      "id": 6
     }
   ]
 }

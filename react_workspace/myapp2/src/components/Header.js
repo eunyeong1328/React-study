@@ -11,7 +11,11 @@ const Header = () => {
                 <Link to="/create_word" className="link">
                     단어추가
                 </Link>
-                <a href="#" className="link"> Day 추가</a>
+                
+                {/* <a href="#" className="link"> Day 추가</a> */}
+                <Link to="/create_day" className="link">
+                    Day 추가
+                </Link>
             </div>
             <hr />
         </div>
