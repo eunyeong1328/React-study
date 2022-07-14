@@ -65,3 +65,8 @@ router.route('/process/login').all((req,res) => {
 
     res.send('id : ' + id + ',password' + password);
 })
+
+app.all('*', (req, res) => {
+    console.log(' 에러 처리 ..');
+    res.status(404).send('요청한 페이지를 찾을 수 없습니다. 체크하세요...');
+})
