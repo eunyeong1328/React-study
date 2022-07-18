@@ -1,3 +1,5 @@
+import CustomerDelete from "./CustomerDelete";
+
 const Customer = (props) => {
     const imgStyle = {
         width: "100px",
@@ -10,6 +12,7 @@ const Customer = (props) => {
             <td>{props.name}</td>
             <td>{props.birthday}</td>
             <td>{props.job}</td>
+            <td><CustomerDelete id = {props.id}/></td>
         </tr>
         // <div>
         //     <CustomerProfile 
