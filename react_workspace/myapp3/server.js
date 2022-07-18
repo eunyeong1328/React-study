@@ -32,10 +32,11 @@ let pool = mysql.createPool({
     database: conf.database
 });
 
-//디비에서 데이터 가져오기
+//DB에서 데이터 가져오기
 let router = express.Router();
 app.use('/',router); //중요 
 
+//전체 데이터 보기
 router.route('/api/customerList/').all((req,res)=>{
     // console.log('/api/customerList/');
     pool.getConnection((err,conn)=>{
@@ -47,7 +48,7 @@ router.route('/api/customerList/').all((req,res)=>{
             return
         }
 
-        let sql = 'select * from customer';
+        let sql = 'select * from customer where isDeleted = 0';
         conn.query(sql, (err, result) => {
             conn.release();
             if(err){
@@ -84,8 +85,8 @@ router.route('/api/customerUplaod/').all(upload.single('file'), (req,res) =>{
             return;
         }
 
-        let params = [null, image, name, birthday, job];
-        let sql = "insert into customer values(?,?,?,?,?)";
+        let params = [null, image, name, birthday, job,0];
+        let sql = "insert into customer values(?,?,?,?,?,?);";
         conn.query(sql, params, (err, results) => {
             conn.release();
             if(err){
@@ -93,7 +94,35 @@ router.route('/api/customerUplaod/').all(upload.single('file'), (req,res) =>{
                 return;
             }
             res.send(results); 
-        })
-    })
+        });
 
+    });
 });
+
+//데이터 삭제하기
+router.route("/api/customerDelete").all((req,res) =>{
+    console.log("api/customerDelete ==> ");
+    let id = req.body.id || req.query.id;
+
+    console.log(`/api/customerDelete: id ${id}`);
+
+    pool.getConnection((err, conn) => {
+        if(err){
+            console.log("getConnection() 에러" + err);
+            if(conn){
+                conn.release();
+            }
+            return;
+        }
+        let sql = 'update customer set isDeleted = 1 where id = ?';
+        let params = [id];
+        conn.query(sql, params, (err, results)=>{
+            conn.release();
+            if(err){
+                console.log('query() 에러 --> ', err);
+                return;
+            }
+            res.send(results); 
+        });
+    })
+})
