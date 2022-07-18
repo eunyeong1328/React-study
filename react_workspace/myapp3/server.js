@@ -73,10 +73,7 @@ router.route('/api/customerUplaod/').all(upload.single('file'), (req,res) =>{
     let birthday = req.body.birthday;
     let job = req.body.job;
 
-    console.log(`server data ${req.file.filename}  
-     ${req.body.username}  
-      ${req.body.birthday} 
-        ${req.body.job}`);
+    console.log(`server data ${image}, ${name}, ${birthday}, ${job}`);
 
     pool.getConnection((err,conn)=>{
         if(err){
@@ -84,11 +81,11 @@ router.route('/api/customerUplaod/').all(upload.single('file'), (req,res) =>{
             if(conn){
                 conn.release();
             }
-            return
+            return;
         }
 
         let params = [null, image, name, birthday, job];
-        let sql = "insert into customer values(?,?,?,?)";
+        let sql = "insert into customer values(?,?,?,?,?)";
         conn.query(sql, params, (err, results) => {
             conn.release();
             if(err){
@@ -96,7 +93,7 @@ router.route('/api/customerUplaod/').all(upload.single('file'), (req,res) =>{
                 return;
             }
             res.send(results); 
-        });
-
+        })
     })
+
 });
