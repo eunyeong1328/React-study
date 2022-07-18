@@ -6,7 +6,7 @@ import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CustomerAdd from './components/CustomerAdd';
 
 
@@ -34,6 +34,32 @@ function App() {
       console.log('App.js error ==>' + err);
     })
   });
+
+  //검색
+  const searchKeyRef  = useRef(null);
+  const filteredComponent = () => {
+    console.log('filteredComponent 실행');
+    let customerList = customers.filter((customer) => {
+      return( (customer.name.indexOf(searchKeyRef.current.value)) > -1);
+    })
+
+    return customerList.map((customer)=>{
+      return (      <Customer 
+                      id={customer.id}
+                      image={customer.image}
+                      name={customer.name}
+                      birthday={customer.birthday}
+                      job={customer.job}
+                      key={customer.id} />
+      )
+    })
+  }
+
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+    filteredComponent();
+  } 
+
   // const customers = [
   //   {
   //     // https://placeimg.com/64/64/any 에 들어가면 64x64 이미지를 랜덤으로 줌
@@ -79,14 +105,15 @@ function App() {
               Link
             </Nav.Link>
           </Nav>
-          <Form className="d-flex">
+          <Form onSubmit = {handleSubmit} className="d-flex">
             <Form.Control
               type="search"
               placeholder="Search"
               className="me-2"
               aria-label="Search"
+              ref = {searchKeyRef}
             />
-            <Button variant="outline-success">Search</Button>
+            <Button type = "submit" variant="outline-success">Search</Button>
           </Form>
         </Navbar.Collapse>
       </Container>
@@ -108,18 +135,19 @@ function App() {
                 </tr>
               </thead>
               <tbody>
-              {
-                customers.map((customer) => {
-                  return (
-                    <Customer 
-                      id={customer.id}
-                      image={customer.image}
-                      name={customer.name}
-                      birthday={customer.birthday}
-                      job={customer.job}
-                      key={customer.id} />
-                  )
-                })
+              { 
+                customers ? filteredComponent(customers) : ""
+                // customers.map((customer) => {
+                //   return (
+                //     <Customer 
+                //       id={customer.id}
+                //       image={customer.image}
+                //       name={customer.name}
+                //       birthday={customer.birthday}
+                //       job={customer.job}
+                //       key={customer.id} />
+                //   )
+                // })
               }
               </tbody>
             </Table>    
