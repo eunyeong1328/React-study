@@ -6,13 +6,14 @@ app.set('port',3000);
 
 let server = http.createServer(app).listen(app.get('port'),()=>{
     console.log('express 이용 서버 실행중..');
-    connectDB(); //호출을 해야한다.
+    connectDB(); //mongoDB 호출을 해야한다.
 })
 
 //특정 폴더를 url로 접근하기 위한 설정(미들웨어)
 let static = require('serve-static');
 let path = require('path'); //현재 디렉토리 정보
 const { urlencoded } = require('express');
+const { isFunction } = require('util');
 
 let pathName = path.join(__dirname, 'public'); //__dirname 현재 디렉토리 정보
 console.log('pathName :' + pathName);
@@ -27,6 +28,38 @@ app.use(express.json());//post : application//json
 let router = express.Router();
 //중요. '/' 입력되면, router객체로 연결
 app.use('/',router);
+
+router.route('/process/adduser').all((req,res)=>{
+    console.log('/process/adduser-->');
+    let id = req.body.id || req.query.id;
+    let password = req.body.password || req.query.password;
+    let name = req.body.name || req.query.name;
+    let age = req.body.age || req.query.age;
+
+    console.log(`data confirm ${id}, ${password},${name},${age} `);
+
+    if(database){
+        //users 콜렉션에 접근
+        let users = database.collection('users');//바로 접근
+        let data = [{"id" :id, "password" : password , "name" :name, "age" :age }];
+        users.insertMany(data,(err, results)=>{
+            if(err){
+                console.log('insertMay() err-->');
+                return;
+            }
+            if(results){
+                res.send('사용자 추가 성공');
+            }
+            else{
+                res.send('사용자 추가 실패');
+            }
+        });
+    }
+    else{
+        console.log('몽고디비 연결 실패..');
+    }
+    
+})
 
 //mongoDB 연결
 let mongoClient = require('mongodb').MongoClient;
