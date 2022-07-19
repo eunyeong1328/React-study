@@ -13,7 +13,7 @@ let server = http.createServer(app).listen(app.get('port'),()=>{
 let static = require('serve-static');
 let path = require('path'); //현재 디렉토리 정보
 const { urlencoded } = require('express');
-const { isFunction } = require('util');
+const { isFunction, callbackify } = require('util');
 
 let pathName = path.join(__dirname, 'public'); //__dirname 현재 디렉토리 정보
 console.log('pathName :' + pathName);
@@ -60,6 +60,38 @@ router.route('/process/adduser').all((req,res)=>{
     }
     
 })
+
+//로그인 처리 
+router.route('/process/login').all((req, res) =>{
+    console.log('/process/login --> ');
+    
+    let id = req.body.id || req.query.id;
+    let password = req.body.password || req.query.password;
+    console.log(`confirm data ${id} ${password}`);
+
+    if(database){
+        let users = database.collection('users');
+        let param = {"id" : id, "password" : password}
+        users.find(param).toArray((err,results) => {
+            if(err){
+                console.log('find()--> 에러 발생');
+                return;
+            }
+            if(results.length>0){
+                console.log('사용자 찾음 !!');
+                res.send('사용자 찾기 성공 !! ')
+            }
+            else{
+                console.log('사용자 찾기 실패 !! ');
+                res.send('사용자 찾기 실패 !! ')
+            }
+        });
+    }
+    else{
+        console.log('디비연결 실패 !!');
+    }
+});
+
 
 //mongoDB 연결
 let mongoClient = require('mongodb').MongoClient;
